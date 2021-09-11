@@ -46,14 +46,20 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 					authenticationManager.authenticate(authenticationToken);
 			
 			PrincipalDetails principalDetails = (PrincipalDetails)authentication.getPrincipal();
-			System.out.println(principalDetails.getUser().getUsername());
+			System.out.println("로그인 완료: "+principalDetails.getUser().getUsername());
 			
 			return authentication;
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("==================================");
 		return null;
+	}
+	
+	@Override
+	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
+			Authentication authResult) throws IOException, ServletException {
+		System.out.println("successfulAuthentication 실행 됨");
+		super.successfulAuthentication(request, response, chain, authResult);
 	}
 }
